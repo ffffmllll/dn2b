@@ -16,5 +16,9 @@ document.addEventListener("keydown", function(event) {
         document.getElementById("initialImage").style.display = "none";
         videoElement.style.display = "block";
         videoElement.src = videos[keyPressed];
+        // Set playback rate to -1 to play the video backward
+        videoElement.playbackRate = -1;
+        // Play the video
+        videoElement.play();
     }
 });
