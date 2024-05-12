@@ -91,7 +91,7 @@
                 innerDiv.classList.add('image-inner');
 
                 const img = document.createElement('img');
-                img.src = image.url_l;
+                img.src = image.url_l.replace('_b.jpg', '_w.jpg');
                 img.alt = image.title;
 
                 const title = document.createElement('p');
@@ -108,7 +108,7 @@
 
                 const distance = document.createElement('p');
                 if (image.distance) {
-                    distance.textContent = 'Distance: ' + image.distance.toFixed(2) + ' meters away';
+                    distance.textContent = 'Distance: ' + image.distance.toFixed(2) + ' meters away from specified coordinate';
                 }
 
                 const link = document.createElement('a');
@@ -133,7 +133,7 @@
                 container.appendChild(div);
 
                 // Initialize map
-                initMap(image.latitude, image.longitude, 'map-' + image.id);
+                initMap(parseFloat(image.latitude), parseFloat(image.longitude), 'map-' + image.id);
             });
         }
 
@@ -159,7 +159,7 @@
                 const lon = parseFloat(coordinate[1]);
 
                 jsonData.forEach(image => {
-                    const distance = Math.sqrt(Math.pow(image.latitude - lat, 2) + Math.pow(image.longitude - lon, 2)) * 111000; // 1 degree is approximately 111 kilometers
+                    const distance = Math.sqrt(Math.pow(parseFloat(image.latitude) - lat, 2) + Math.pow(parseFloat(image.longitude) - lon, 2)) * 111000; // 1 degree is approximately 111 kilometers
                     image.distance = distance;
                 });
 
