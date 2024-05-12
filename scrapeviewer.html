@@ -195,12 +195,46 @@
             document.getElementById(mapId).style.width = document.getElementById(mapId).parentElement.clientWidth + 'px';
         }
 
+        function mergeSort(arr, comparator) {
+            if (arr.length <= 1) {
+                return arr;
+            }
+
+            const mid = Math.floor(arr.length / 2);
+            const left = arr.slice(0, mid);
+            const right = arr.slice(mid);
+
+            return merge(
+                mergeSort(left, comparator),
+                mergeSort(right, comparator),
+                comparator
+            );
+        }
+
+        function merge(left, right, comparator) {
+            let result = [];
+            let leftIndex = 0;
+            let rightIndex = 0;
+
+            while (leftIndex < left.length && rightIndex < right.length) {
+                if (comparator(left[leftIndex], right[rightIndex]) <= 0) {
+                    result.push(left[leftIndex]);
+                    leftIndex++;
+                } else {
+                    result.push(right[rightIndex]);
+                    rightIndex++;
+                }
+            }
+
+            return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+        }
+
         function sortImages() {
             const sortOption = document.getElementById('sortOption').value;
             if (sortOption === 'newest') {
-                jsonData.sort((a, b) => new Date(b.datetaken) - new Date(a.datetaken));
+                jsonData = mergeSort(jsonData, (a, b) => new Date(b.datetaken) - new Date(a.datetaken));
             } else if (sortOption === 'oldest') {
-                jsonData.sort((a, b) => new Date(a.datetaken) - new Date(b.datetaken));
+                jsonData = mergeSort(jsonData, (a, b) => new Date(a.datetaken) - new Date(b.datetaken));
             } else if (sortOption === 'closest') {
                 const coordinate = document.getElementById('coordinate').value.split(',');
                 const lat = parseFloat(coordinate[0]);
@@ -211,7 +245,7 @@
                     image.distance = distance;
                 });
 
-                jsonData.sort((a, b) => a.distance - b.distance);
+                jsonData = mergeSort(jsonData, (a, b) => a.distance - b.distance);
             }
 
             displayImages(jsonData, currentPage, perPage);
