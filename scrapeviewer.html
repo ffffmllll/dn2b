@@ -49,6 +49,26 @@
             top: 10px;
             right: 10px;
         }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+        }
+        .pagination button:hover {
+            background-color: #0056b3;
+        }
+        .pagination .active {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -62,10 +82,14 @@
     </div>
     <input type="file" id="fileInput" accept=".json" onchange="handleFile(this.files)">
     <div class="container" id="imageContainer"></div>
+    <div class="pagination" id="pagination"></div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         let jsonData;
+        let currentPage = 1;
+        const perPage = 50; // 50 pictures per page
+        const maxPages = 10; // Adjust this to change the maximum number of page buttons to display
 
         function handleFile(files) {
             const file = files[0];
@@ -73,17 +97,21 @@
 
             reader.onload = function(event) {
                 jsonData = JSON.parse(event.target.result);
-                displayImages(jsonData);
+                displayImages(jsonData, currentPage, perPage);
             }
 
             reader.readAsText(file);
         }
 
-        function displayImages(data) {
+        function displayImages(data, page, perPage) {
             const container = document.getElementById('imageContainer');
             container.innerHTML = '';
 
-            data.forEach(image => {
+            const startIndex = (page - 1) * perPage;
+            const endIndex = page * perPage;
+            const paginatedData = data.slice(startIndex, endIndex);
+
+            paginatedData.forEach(image => {
                 const div = document.createElement('div');
                 div.classList.add('image');
 
@@ -91,7 +119,7 @@
                 innerDiv.classList.add('image-inner');
 
                 const img = document.createElement('img');
-                img.src = image.url_l.replace('_b.jpg', '_w.jpg');
+                img.setAttribute('data-src', image.url_l.replace('_b.jpg', '_w.jpg'));
                 img.alt = image.title;
 
                 const title = document.createElement('p');
@@ -135,6 +163,26 @@
                 // Initialize map
                 initMap(parseFloat(image.latitude), parseFloat(image.longitude), 'map-' + image.id);
             });
+
+            lazyLoadImages();
+            updatePagination(data.length, page, perPage);
+        }
+
+        function lazyLoadImages() {
+            const images = document.querySelectorAll('img[data-src]');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.getAttribute('data-src');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            images.forEach(img => {
+                observer.observe(img);
+            });
         }
 
         function initMap(latitude, longitude, mapId) {
@@ -166,7 +214,60 @@
                 jsonData.sort((a, b) => a.distance - b.distance);
             }
 
-            displayImages(jsonData);
+            displayImages(jsonData, currentPage, perPage);
+        }
+
+        function updatePagination(totalItems, currentPage, perPage) {
+            const totalPages = Math.ceil(totalItems / perPage);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            let startPage, endPage;
+            if (totalPages <= maxPages) {
+                startPage = 1;
+                endPage = totalPages;
+            } else {
+                const halfMaxPages = Math.floor(maxPages / 2);
+                if (currentPage <= halfMaxPages) {
+                    startPage = 1;
+                    endPage = maxPages;
+                } else if (currentPage + halfMaxPages >= totalPages) {
+                    startPage = totalPages - maxPages + 1;
+                    endPage = totalPages;
+                } else {
+                    startPage = currentPage - halfMaxPages;
+                    endPage = currentPage + halfMaxPages;
+                }
+            }
+
+            const firstButton = document.createElement('button');
+            firstButton.textContent = 'First';
+            firstButton.addEventListener('click', () => {
+                currentPage = 1;
+                displayImages(jsonData, currentPage, perPage);
+            });
+            pagination.appendChild(firstButton);
+
+            for (let i = startPage; i <= endPage; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    displayImages(jsonData, currentPage, perPage);
+                });
+                if (i === currentPage) {
+                    button.classList.add('active');
+                }
+                pagination.appendChild(button);
+            }
+
+            const lastButton = document.createElement('button');
+            lastButton.textContent = 'Last';
+            lastButton.addEventListener('click', () => {
+                currentPage = totalPages;
+                displayImages(jsonData, currentPage, perPage);
+            });
+            pagination.appendChild(lastButton);
         }
     </script>
 </body>
