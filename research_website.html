@@ -3,15 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>research website</title>
+    <style>
+        body {
+            background-image: url('https://www.transparenttextures.com/patterns/batthern.png');
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            color: #333;
+            text-align: center;
+        }
+        b {
+            font-size: 20px;
+        }
+        a {
+            color: #ff69b4;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            max-width: 800px;
+            margin: 10px auto;
+            line-height: 1.6;
+        }
+        img {
+            border: 5px solid #ff69b4;
+            margin: 10px 0;
+        }
+        video {
+            border: 5px solid #ff69b4;
+        }
+        h1, h2, h3, h4 {
+            color: #ff69b4;
+            text-shadow: 2px 2px 4px #aaa;
+        }
+        h1 {
+            animation: colorchange 2s infinite;
+        }
+        @keyframes colorchange {
+            0% {color: #ff69b4;}
+            50% {color: #ff1493;}
+            100% {color: #ff69b4;}
+        }
+        .fancy-title {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: #ff69b4;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px #aaa;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4, 0 0 40px #ff69b4, 0 0 50px #ff69b4, 0 0 60px #ff69b4, 0 0 70px #ff69b4;
+            }
+            to {
+                text-shadow: 0 0 20px #ff1493, 0 0 30px #ff1493, 0 0 40px #ff1493, 0 0 50px #ff1493, 0 0 60px #ff1493, 0 0 70px #ff1493, 0 0 80px #ff1493;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<b>✿ HELLO WORLD & ✤</b>
+<b class="fancy-title">✿ HELLO WORLD & ✤</b>
 <p>
 
 <a data-flickr-embed="true" href="https://www.flickr.com/photos/kattebelletje/7775487996" title="Design Academy Eindhoven"><img src="https://live.staticflickr.com/8446/7775487996_a5f7abe3ff.jpg" width="375" height="500" alt="Design Academy Eindhoven"/></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 </p>
-<b>Welcome to my Digital native research website for after the midterms.</b>
+<b class="fancy-title">Welcome to my Digital native research website for after the midterms.</b>
 
 <p>This website will look a little bit messy, the theme of the website is early 2000s/2010s webblog, to reflect the aesthetics of Flickr.</p>
 
@@ -19,7 +77,7 @@
 
 <p>I am using many photos from Flickr on this page, these are clickable, to be transparent about the source.</p>
 
-<b>LET's GET STARTED ☀</b>
+<b class="fancy-title">LET's GET STARTED ☀</b>
 
 <p><b>Starting research after end term: Archive.org and Flickr</b></p>
 
@@ -32,7 +90,6 @@
 <p>Personally, I use Flickr a lot to find photos that inspire me. Pinterest really algorithmically spoon-feeds you images and defines your aesthetic for you, however Flickr doesn't have any recommendation algorithms, and usually to find nice photos, I will just go through many people's profiles, their favorites, and their friends, in order to find new photos to add to my favorites. Speaking of, here are my favorites:</p>
 
 <a data-flickr-embed="true" href="https://www.flickr.com/photos/200204050@N05/favorites/" title=""><img src="https://live.staticflickr.com/8446/7775487996_a5f7abe3ff_w.jpg" width="500" height="375" alt=""/></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
-
 
 <p><b>♬ the GEODATA map ♬</b></p>
 
@@ -50,21 +107,80 @@
 
 <p><b>scraping & Qgis</b></p>
 
+<p>Scraping is downloading big amounts of data from the internet in an automated way, it is most commonly done to train AI, or for scientific research.</p>
+
+<p>I mentioned scraping at the beginning of this research web hub, because Archive.org often uses scraping to archive web pages and communities. There are many groups of people currently working with Archive.org to create accessible archives, like for example <a href="http://www.sucho.org">SUCHO</a>, which archives Ukrainian websites to prevent them from going down as a result of the Russian invasion.</p>
+
+<p>It seemed to me, like a good next step in my process, was to try to scrape the Flickr geodata map. I was able to run a <a href="https://github.com/antiboredom/flickr-scrape">scraping algorithm by a user called antiboredom</a> that uses python, which I downloaded from github. This scraping algorithm was useful, but it didn't give me the option to download images only based on coordinates. However, I was able to modify the code using ChatGPT to scrape with only coordinates, no search term required. I also was able to make it so that it would only give me image URLs and no images anymore. To view the images, I worked with ChatGPT to create a tool that would let me upload the JSON file generated by the scraping algorithm in order to view all the images and where they were taken, as well as search for the closest image to a certain coordinate. The only thing is that it can get a little messy with big data sets. <a href="scrapeviewer.html">You can view the tool here!</a> <a href="resultshsum.json">And here you can download a json file that you can upload there (open and press command + s)</a></p>
+
+<p>Also, having this big data set, I experimented with QGIS to create maps of images. The first one I tried was for a friend, who is doing a big research project about the lost queer history of Bugis street in Singapore. Therefore that is the location that these maps center. This was my first time using QGIS.</p>
+
+ <video width="500px" 
+           height="400px" 
+           controls="controls">
+        <source src=
+"ezgif-7-ecc8e04692.mp4" 
+                type="video/mp4" />
+    </video>
+
+<img src="bugis street real copy.jpeg" width="100%">
+
 <p><b>⟢⟢⟢ Flickr ⟡ & ⟡ AI training ⟣⟣⟣</b></p>
+
+<p>Doing these experiments were very fun, but at the same time, felt very extractive. I am usually very critical of things like AI, so why would I replicate a part of its process. At this point, I decided that it would be better to create something to exist inside of Flickr, so that it is giving back to the Flickr community, instead of extracting and operationalising other peoples art.</p>
+
+<p>I also realised that Flickr would be an extremely easy source for AI to train on, and is probably already being trained on by many of the big AIs out there, as its API gave me access to millions of copyrighted images that I could just download, no questions asked.</p>
+
+<p><a href=https:"//www.artificialintelligence-news.com/2019/03/13/ibm-flickr-photos-ai-training/">One source confirmed IBM has used Flickr for AI photo training.</a> They were however only using Creative Commons and public domain licensed images. This however also raises questions, as these licenses were created before AI training was really as big of a thing, so are these licenses really consenting to this, or is it just an oversight in the law? Creative Commons often comes out with new versions of it's license to better protect the users, however, most Flickr photos are still using older versions of the licenses.</p>
 
 <p><b>what can I do against AI training</b></p>
 
+<p> I can say a lot in this section, however, I think it is easier if I refer you to my <a href="guide to fighting AI training.pdf">home guide for AI training</a>, which I wrote to have at end terms.
+
 <p><b>allllll my criticisms of AI + case studies, in a row</b></p>
+<p>I have a long list of criticisms of generative AI, here is that list, followed by 2 case studies of AI being EVIL:</p>
+
+<p>1. AI is used for scams and it is used to make non-consensual pornography.</p>
+<p>2. AI trains on images that it usually doesn't have permission to use.</p>
+<p>3. AI recreates/reinforces biases in society that it gets in it's training data.</p>
+<p>4. Because AI is black box, when AI says something problematic, it is often just seen as a silly mistake, instead of something that should be traced back in the training data.</p>
+<p>5. People have TOO MUCH TRUST in AI's accuracy.</p>
+<p>6. Generative AI is literally unnecessary, because we have real artists, so why would we need AI ones? Isn't the whole point of art to reflect on the human experience, and how is AI gonna reflect on something that it has never had. Also instead of paying artists, we are now paying for electricity costs of datacenters that store stolen images for the AI to train for??? just crazy...</p>
+<p>7. AI is used to classify people, however do people really need to be classified? 8% of straight cis men get wrongly classified in a standard gender recognition algorithm, while 25% of women and lgbtq+ get wrongly classified.</p>
+<p>8. AI is such a vast body of knowledge, but literally can not tell you the author... so you will never get much more than face value.</p>
+<p>9. When we are normally on the internet, we can deduct if an image is super biased from what website it is on, and what else is on that website, or maybe we already know the website. It is quite easy to be media literate, and see bias, however AI can bring you this same information, without you doubting it.
 
 <p><b>♛ making a photocomic ♛</b></p>
 
+<p>Thinking about what to make for my intervention on the Flickr geodatamap, the idea of making a photocomic came into my head quite quickly. Flickr hosts a lot of photocomics on it, and the time period in which photocomics were very widespread was also around the time that Flickr was.</p>
+
+<p>One thing that I do want to do differently than other photocomics, is eventually upload the finished comic onto the Geodatamap. The topic of the photocomic would be about resisting AI training and actively fighting it. Then the photo comic itself would use things like weird tagging, filters, nightshade, etc, to <i>queer</i> the geodata map around it. These interventions would then make it less lucrative for companies to train AI on the Flickr geodata map.</p>
+
+<p>I also felt that doing a fictional work would be a really new challenge for me, and I was really in need of doing something slightly escapist with the state of the world :p</p>
+
 <p><b>chapters of the photocomic, and what they would discuss</b></p>
 
-<p><b>moodboard 4 aesthetic</b></p>
+<p>I have 10 chapters of the photocomic planned, as well as a prelude. Here is what I want to convey in each chapter:</p>
+
+<img src="text1.jpeg" width="30%"><img src="text2.jpeg" width="30%">
+
+<img src="script1.jpeg" width="60%"><img src="script2.jpeg" width="30%"><img src="script3.jpeg" width="10%">
+
+<p>After planning all of this out, I started to work on the actual 10 chapter photocomic, I got pretty far, but I realised that it was not going to be able to be done before the end term, and I was working so much that I couldn't really take care of myself anymore, so I really had to change my plan. Talking at the final feedback session made me a bit more confident, because I was told to stick with the photocomic, and just present it in a way that is finished. Also, I was told to bring the map into the presentation. I decided to take the most important moments from the photocomic and condense those and create the missing moments that I had not yet made, and print those out big.</p>
+
+<img src="text3.jpeg" width="30%">
+
+<p>My plans for the posters.</p>
 
 <p><b>✈ final setup ✈</b></p>
 
+<img src="setup2506.HEIC" width="100%">
+
+<p>The photocomic posters are hanging, there are 12 in total, so they are double sided, chronologically from left to right. Above this, there are 4 canvases hanging and a poster with the pages of the unfinished full photocomic on it. The 4 canvases are being projected on with a unity scene that I made, in which you have coordinates, and you can walk around the Geodata map, then it will find new images around you based on where you are. I will put a rug on the floor where you can sit, and there will be a wireless keyboard on it." I really want people to be able to sit as reading the work you spend quite a lot of time with it, and then the purpose of the canvases is to break the 4th wall in a way, as they are also hanging in the same way as they are portrayed in the photocomic.</p>
+
 <p><b>reflection</b></p>
+
+<p>maybe I will write this after the presentation, or after the setup is 100% done...</p>
 
 </body>
 </html>
